@@ -9,13 +9,26 @@ from .common cimport dbc_lookup, SignalPackValue
 
 
 cdef class CANPacker:
+<<<<<<< HEAD
   cdef cpp_CANPacker *packer
+=======
+  cdef:
+    cpp_CANPacker *packer
+    const DBC *dbc
+    map[string, int] name_to_address
+>>>>>>> upstream/master
 
   def __init__(self, dbc_name):
     if not dbc_lookup(dbc_name):
       raise RuntimeError(f"Can't lookup {dbc_name}")
 
     self.packer = new cpp_CANPacker(dbc_name)
+<<<<<<< HEAD
+=======
+    for i in range(self.dbc[0].msgs.size()):
+      msg = self.dbc[0].msgs[i]
+      self.name_to_address[string(msg.name)] = msg.address
+>>>>>>> upstream/master
 
   cdef vector[uint8_t] pack(self, addr, values):
     cdef vector[SignalPackValue] values_thing
